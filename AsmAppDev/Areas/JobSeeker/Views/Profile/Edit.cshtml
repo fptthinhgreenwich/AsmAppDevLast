@@ -1,0 +1,141 @@
+﻿@model AsmAppDev.Models.ApplicationUser
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f9;
+            color: #333;
+        }
+
+        h2 {
+            color: #2a9d8f;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-outline-primary {
+            border: 2px solid #264653;
+            color: #264653;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+            .btn-outline-primary:hover {
+                background-color: #264653;
+                color: #fff;
+            }
+
+        .profile-container {
+            margin: 30px auto;
+            max-width: 800px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .img-fluid {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #2a9d8f;
+            object-fit: cover;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s ease;
+        }
+
+            .form-control:focus {
+                border-color: #2a9d8f;
+                box-shadow: 0px 0px 5px rgba(42, 157, 143, 0.5);
+            }
+
+        .border {
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .btn-outline-success {
+            background-color: #2a9d8f;
+            color: white;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-outline-success:hover {
+                background-color: #21867a;
+            }
+
+        label {
+            font-weight: bold;
+            color: #264653;
+        }
+    </style>
+</head>
+
+<div class="profile-container">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Profile</h2>
+        <a asp-controller="Profile" asp-action="Index" class="btn btn-outline-primary">Back to List</a>
+    </div>
+    <hr />
+
+    <div class="w-75 row mt-4">
+        <div class="col-md-4 mt-3 text-center">
+            @if (!string.IsNullOrEmpty(Model.Avatar))
+            {
+                <img src="@Model.Avatar" alt="Avatar" class="img-fluid" />
+            }
+            else
+            {
+                <p>No avatar available</p>
+            }
+        </div>
+        <div class="col-md-8">
+            <form asp-action="Edit" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
+                <!-- Hiển thị thông tin người dùng -->
+                <div class="border p-3">
+                    <div class="mb-3 row">
+                        <label asp-for="@Model.Name" class="col-sm-4 col-form-label"></label>
+                        <div class="col-sm-8">
+                            <input asp-for="@Model.Name" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="@Model.Introduction" class="col-sm-4 col-form-label"></label>
+                        <div class="col-sm-8">
+                            <input asp-for="@Model.Introduction" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="@Model.Address" class="col-sm-4 col-form-label"></label>
+                        <div class="col-sm-8">
+                            <input asp-for="@Model.Address" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-4 col-form-label">Avatar</label>
+                        <div class="col-sm-8">
+                            <input type="file" name="avatarFile" accept="image/*" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-4 col-form-label">CV</label>
+                        <div class="col-sm-8">
+                            <input type="file" name="cvFile" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="mt-3 w-50 btn btn-outline-success"><i class="bi bi-pen"></i> Update</button>
+            </form>
+        </div>
+    </div>
+</div>

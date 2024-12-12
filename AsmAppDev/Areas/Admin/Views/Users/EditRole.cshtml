@@ -1,0 +1,115 @@
+﻿@model EditRoleViewModel
+<head>
+    <style>
+        /* Định dạng chung */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9fb;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #264653;
+            margin-bottom: 20px;
+        }
+
+        form {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background-color: #2a9d8f;
+        }
+
+        thead th {
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        tbody td {
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        tbody tr:hover {
+            background-color: #e9ecef;
+            cursor: pointer;
+        }
+
+        input[type="radio"] {
+            width: 16px;
+            height: 16px;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            background-color: #2a9d8f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #21867a;
+        }
+    </style>
+</head>
+
+
+<h1>Edit Roles for @Model.UserName</h1>
+
+<form asp-action="EditRole" method="post">
+    <input type="hidden" asp-for="UserId" />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Role</th>
+                <th>Selected</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in Model.Roles)
+            {
+                <tr>
+                    <td>@role.RoleName</td>
+                    <td>
+                        <input type="radio" name="Roles" value="@role.RoleName" @(role.IsSelected ? "checked" : "") />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit">Save Changes</button>
+</form>
+

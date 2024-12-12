@@ -1,0 +1,167 @@
+﻿@model JobVM
+
+<head>
+    <style>
+        /* Định dạng chung */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9fb;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #264653;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .btn-outline-primary {
+            background-color: #2a9d8f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-outline-primary:hover {
+                background-color: #21867a;
+            }
+
+        form {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .border {
+            background-color: #f7f7f9;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #264653;
+        }
+
+        input, select, textarea {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 14px;
+            width: 100%;
+            transition: border-color 0.3s ease;
+        }
+
+            input:focus, select:focus, textarea:focus {
+                border-color: #2a9d8f;
+                box-shadow: 0px 0px 5px rgba(42, 157, 143, 0.5);
+            }
+
+        textarea {
+            resize: none;
+        }
+
+        .text-danger {
+            font-size: 12px;
+            color: #e63946;
+            margin-top: 5px;
+        }
+
+        .btn-edit-job {
+            background-color: #2a9d8f;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            float: right;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-edit-job:hover {
+                background-color: #21867a;
+            }
+
+        .input-field {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+            .input-field label {
+                flex-basis: 25%;
+                text-align: right;
+                margin-right: 10px;
+            }
+
+            .input-field input, .input-field select, .input-field textarea {
+                flex-basis: 70%;
+            }
+    </style>
+</head>
+
+<div class="header">
+    <h2>Edit a job</h2>
+    <a asp-controller="Job" asp-action="Index" class="btn btn-outline-primary">Back to List</a>
+</div>
+
+<hr/>
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <input hidden asp-for="Job.Id" />
+        <div class="mb-2 input-field">
+            <label asp-for="Job.Title"></label>
+            <div class="d-grid w-75">
+                <input asp-for="Job.Title" class="form-control px-2">
+                <span asp-validation-for="Job.Title" class="text-danger mt-4"></span>
+            </div>
+        </div>
+        <div class="mb-2 input-field">
+            <label asp-for="Job.Description"></label>
+            <div class="d-grid w-75">
+                <textarea asp-for="Job.Description" class="form-control px-2" rows="4"></textarea>
+                <span asp-validation-for="Job.Description" class="text-danger mt-2"></span>
+            </div>
+        </div>
+        <div class="mb-2 input-field">
+            <label asp-for="Job.requiredQualification">Required Qualification</label>
+            <div class="d-grid w-75">
+                <input asp-for="Job.requiredQualification" class="form-control px-2">
+                <span asp-validation-for="Job.requiredQualification" class="text-danger mt-4"></span>
+            </div>
+        </div>
+        <div class="mb-4 input-field">
+            <label asp-for="Job.Deadline"></label>
+            <div class="d-grid w-75">
+                <input asp-for="Job.Deadline" class="form-control px-2">
+                <span asp-validation-for="Job.Deadline" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-4 input-field">
+            <label asp-for="Job.Category"></label>
+            <div class="d-grid w-75">
+                <select asp-for="Job.CategoryId" asp-items="@Model.Categories" class="form-select px-2"></select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-outline-primary btn-edit-job">Edit</button>
+    </div>
+</form>

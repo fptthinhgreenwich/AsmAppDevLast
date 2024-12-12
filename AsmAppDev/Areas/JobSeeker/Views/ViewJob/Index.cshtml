@@ -1,0 +1,172 @@
+﻿@model List<Job>
+<partial name="_Notification" />
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2a9d8f;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            width: 70%;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: center;
+        }
+
+            .input-group input {
+                flex: 1;
+                border: 2px solid #264653;
+                border-radius: 5px;
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+
+            .input-group button {
+                margin-left: 10px;
+                background-color: #2a9d8f;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                padding: 8px 15px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+
+                .input-group button:hover {
+                    background-color: #21867a;
+                }
+
+        table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: #f4f4f9;
+        }
+
+        thead {
+            background-color: #264653;
+            color: white;
+        }
+
+            thead th {
+                padding: 10px;
+                text-align: center;
+                font-size: 16px;
+            }
+
+        tbody tr:nth-child(odd) {
+            background-color: #e9ecef;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        tbody td {
+            padding: 10px;
+            text-align: center;
+        }
+
+            tbody td a {
+                text-decoration: none;
+                color: #2a9d8f;
+                border: 1px solid #2a9d8f;
+                padding: 5px 10px;
+                border-radius: 5px;
+                font-size: 14px;
+            }
+
+                tbody td a:hover {
+                    background-color: #2a9d8f;
+                    color: white;
+                }
+
+        .sorting-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+            .sorting-links a {
+                margin: 0 10px;
+                color: #264653;
+                text-decoration: none;
+                font-weight: bold;
+                padding: 8px 12px;
+                border: 2px solid #264653;
+                border-radius: 5px;
+            }
+
+                .sorting-links a:hover {
+                    background-color: #264653;
+                    color: white;
+                }
+    </style>
+</head>
+
+<h1>Job Listings</h1>
+
+<!-- Search Form -->
+<form method="get" action="/JobSeeker/ViewJob">
+    <div class="input-group">
+        <input type="text"
+               name="search"
+               placeholder="Search for jobs..."
+               value="@ViewData["SearchValue"]" />
+        <button type="submit">Search</button>
+    </div>
+</form>
+
+<!-- Sorting Links -->
+<div class="sorting-links">
+    <a href="?sortOrder=required_yes&search=@ViewData["SearchValue"]">Sort by Yes(Required Qualification)</a>
+    <a href="?sortOrder=required_no&search=@ViewData["SearchValue"]">Sort by No(Required Qualification)</a>
+</div>
+
+<!-- Job List Table -->
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Required Qualification</th>
+            <th>Deadline</th>
+            <th>Category</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+
+        {
+            <tr>
+                <td colspan="6">No jobs found matching your search.</td>
+            </tr>
+        }
+
+        else
+
+        {
+            @foreach (var Job in Model)
+
+            {
+                <tr>
+                    <td>@Job.Title</td>
+                    <td>@Job.Description</td>
+                    <td>@Job.requiredQualification</td>
+                    <td>@Job.Deadline</td>
+                    <td>@Job.Category.Name</td>
+                    <td>
+                        <a asp-controller="ViewJob" asp-action="Apply" asp-route-id="@Job.Id">Apply</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

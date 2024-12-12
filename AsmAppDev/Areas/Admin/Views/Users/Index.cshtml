@@ -1,0 +1,194 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+@model List<ApplicationUser>
+<partial name="_Notification" />
+
+<head>
+    <style>
+        /* Định dạng chung */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9fb;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #264653;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .thead {
+            background-color: #2a9d8f;
+        }
+
+            .thead th {
+                color: white;
+                padding: 12px;
+                text-align: center;
+                font-size: 14px;
+            }
+
+        .tbody tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+        .tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        .tbody td {
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .tbody tr:hover {
+            background-color: #e9ecef;
+            cursor: pointer;
+        }
+
+        .btn-new-user {
+            background-color: #2a9d8f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-weight: bold;
+            margin-left: 10%;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-new-user:hover {
+                background-color: #21867a;
+            }
+
+        .active_button {
+            background-color: #264653;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+            .active_button:hover {
+                background-color: #1e4e5f;
+            }
+
+        .delete_button {
+            background-color: #e63946;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+            .delete_button:hover {
+                background-color: #d62f3c;
+                text-decoration: none;
+            }
+
+        .text_admin {
+            color: #e63946;
+            font-weight: bold;
+        }
+
+        .text_employee {
+            color: #f4a261;
+            font-weight: bold;
+        }
+
+        .text_default {
+            color: #2a9d8f;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<h1>List of Users</h1>
+
+<a asp-area="Identity" asp-page="/Account/CreateAccountE" class="btn btn-new-user">
+    <i class="bi bi-person-plus-fill"></i> Add New User
+</a>
+
+<table class="table table-bordered">
+    <thead class="thead">
+        <tr>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Status</th>
+            <th>Role</th>
+            <th>Actions</th>
+            <th>Edit Role</th>
+        </tr>
+    </thead>
+    <tbody class="tbody">
+        @foreach (var user in Model)
+
+        {
+
+            var userRole = await UserManager.GetRolesAsync(user);
+            <tr>
+                <td>@user.Email</td>
+                <td style="font-weight: 600;">@user.Name</td>
+                <td>@user.Address</td>
+                <td>@user.City</td>
+                <td class="td-status">
+                    @(user.Status ? "Active" : "Inactive")
+                    @if (user.Status)
+                    {
+                        <form asp-controller="Users" asp-action="ToggleStatus" method="post">
+                            <input type="hidden" name="id" value="@user.Id" />
+                            <button type="submit" class="active_button">Disable</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-controller="Users" asp-action="ToggleStatus" method="post">
+                            <input type="hidden" name="id" value="@user.Id" />
+                            <button type="submit" class="active_button">Enable</button>
+                        </form>
+                    }
+                </td>
+                <td>
+                    @if (userRole.Contains("Admin"))
+                    {
+                        <p class="text_admin">Admin</p>
+                    }
+                    else if (userRole.Contains("Employer"))
+                    {
+                        <p class="text_employee">Employer</p>
+                    }
+                    else if (userRole.Contains("JobSeeker"))
+                    {
+                        <p class="text_default">Job Seeker</p>
+                    }
+                </td>
+                <td>
+                    <a class="delete_button" asp-controller="Users" asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                </td>
+                <td>
+                    <a class="active_button" asp-controller="Users" asp-action="EditRole" asp-route-id="@user.Id">Edit Role</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

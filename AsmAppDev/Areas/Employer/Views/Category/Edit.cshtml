@@ -1,0 +1,117 @@
+﻿@model Category
+
+<head>
+    <style>
+        /* Định dạng chung */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9fb;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2a9d8f;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        .btn-primary {
+            border: 2px solid #264653;
+            background-color: #2a9d8f;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+            .btn-primary:hover {
+                background-color: #21867a;
+                border-color: #21867a;
+                color: white;
+            }
+
+        form {
+            margin: 30px auto;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .border {
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #264653;
+        }
+
+        input {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 14px;
+            width: 100%;
+            transition: border-color 0.3s ease;
+        }
+
+            input:focus {
+                border-color: #2a9d8f;
+                box-shadow: 0px 0px 5px rgba(42, 157, 143, 0.5);
+            }
+
+        .text-danger {
+            color: #e63946;
+            font-size: 12px;
+        }
+
+        .btn-outline-primary {
+            background-color: #264653;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            border: none;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto;
+        }
+
+            .btn-outline-primary:hover {
+                background-color: #1e4e5f;
+            }
+    </style>
+</head>
+
+<div class="header">
+    <h1>Edit a Category</h1>
+    <a asp-controller="Category" asp-action="Index" class="btn btn-primary">Back to List</a>
+</div>
+
+<hr />
+
+<form method="post" class="w-75">
+    <div class="border p-3 mt-4">
+        <div class="mb-3 d-flex justify-content-around align-items-baseline">
+            <label asp-for="Name" class="fw-bold">Name:</label>
+            <div class="d-grid w-75">
+                <input asp-for="Name" class="px-2 fst-italic" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-outline-primary btn-edit"><i class="bi bi-pen"></i> Save Changes</button>
+    </div>
+</form>

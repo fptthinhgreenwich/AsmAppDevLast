@@ -1,0 +1,131 @@
+﻿@model Category
+
+<head>
+    <style>
+        /* Định dạng chung */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9fb;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #e63946;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .btn-primary {
+            background-color: #2a9d8f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-primary:hover {
+                background-color: #21867a;
+            }
+
+        .form-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            color: #264653;
+        }
+
+        input[disabled] {
+            background-color: #e9ecef;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 14px;
+            width: 100%;
+            cursor: not-allowed;
+            color: #6c757d;
+        }
+
+        .btn-outline-danger {
+            background-color: #e63946;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+            display: block;
+            width: 100px;
+            text-align: center;
+        }
+
+            .btn-outline-danger:hover {
+                background-color: #d62f3c;
+            }
+
+        .mb-3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+            .mb-3 label {
+                flex-basis: 30%;
+                text-align: right;
+                margin-right: 10px;
+            }
+
+            .mb-3 input {
+                flex-basis: 60%;
+            }
+    </style>
+</head>
+
+<div class="header">
+    <h2>Delete Category</h2>
+    <a asp-controller="Category" asp-action="Index" class="btn btn-primary">Back to List</a>
+</div>
+<hr />
+
+<div class="form-container">
+    <form method="post" asp-action="Delete">
+        <input asp-for="Id" hidden />
+        <div class="mb-3">
+            <label asp-for="Name">Name</label>
+            <input asp-for="Name" class="form-control" disabled />
+        </div>
+        <div class="mb-3">
+            <label asp-for="DateCreate">Date Create</label>
+            <input asp-for="DateCreate" class="form-control" disabled type="datetime" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="ApplicationUser.Name">User</label>
+            <input asp-for="ApplicationUser.Name" class="form-control" disabled />
+        </div>
+        <button type="submit" class="btn btn-outline-danger">Delete</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,202 @@
+﻿@model IEnumerable<AsmAppDev.Models.JobApplication>
+
+<head>
+    <style>
+        /* Định dạng chung */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9fb;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #264653;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        /* Các nút */
+        .btn-outline-primary {
+            background-color: #2a9d8f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-outline-primary:hover {
+                background-color: #21867a;
+            }
+
+        .btn-outline-success {
+            background-color: #2a9d8f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-outline-success:hover {
+                background-color: #21867a;
+            }
+
+        .btn-outline-danger {
+            background-color: #e63946;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-outline-danger:hover {
+                background-color: #d62f3c;
+            }
+
+        /* Bộ lọc và sắp xếp */
+        #filterBy {
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+            padding: 8px;
+            width: 40%;
+            font-size: 14px;
+        }
+
+        .btn-apply {
+            border: none;
+            background-color: #2a9d8f;
+            color: white;
+            border-radius: 0 5px 5px 0;
+            padding: 8px 15px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-apply:hover {
+                background-color: #21867a;
+            }
+
+        #sortBy {
+            padding: 8px;
+            width: 40%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Bảng dữ liệu */
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background-color: #264653;
+        }
+
+            thead th {
+                color: white;
+                padding: 12px;
+                text-align: center;
+                font-size: 14px;
+            }
+
+        tbody tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        tbody td {
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        tbody tr:hover {
+            background-color: #e9ecef;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<div class="header">
+    <h2>List of Job Application</h2>
+    <a asp-controller="Job" asp-action="Index" class="btn btn-outline-primary">Back to List</a>
+</div>
+
+<hr/>
+
+<!-- Form cho việc sắp xếp và lọc -->
+<form asp-action="ViewJobApp" method="get">
+    <div class="d-flex">
+        <label for="filterBy" class="fw-bold"></label>
+        <input placeholder="filter by Email" type="text" id="filterBy" name="filterBy">
+        <button type="submit" class="btn-apply">Apply Filters</button>
+    </div>
+    <div class="my-4">
+        <label for="sortBy" class="fw-bold">Sort by:</label>
+        <select id="sortBy" name="sortBy">
+            <option value="email">Email (A-Z)</option>
+            <option value="emailDesc">Email (Z-A)</option>
+            <option value="dayApply">Day Apply (Oldest)</option>
+            <option value="dayApplyDesc">Day Apply (Newest)</option>
+        </select>
+    </div>
+</form>
+
+@* <script>
+    document.getElementById("sortBy").addEventListener("change", function () {
+        this.form.submit();
+    });
+</script> *@
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Day Apply</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var jobApplication in Model.Where(j => !j.Status))
+        {
+            <tr>
+                <td>@jobApplication.Email</td>
+                <td>@jobApplication.DayApply.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    <a asp-action="ViewProfile" asp-route-id="@jobApplication.Id" class="btn btn-outline-primary">View Profile</a>
+                    <a asp-action="Accept" asp-route-id="@jobApplication.Id" class="btn btn-outline-success">Acccept</a>
+                    <a asp-action="Decline" asp-route-id="@jobApplication.Id" class="btn btn-outline-danger">Decline</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    document.getElementById("sortBy").addEventListener("change", function () {
+        this.form.submit();
+    });
+</script>

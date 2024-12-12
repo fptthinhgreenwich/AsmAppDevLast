@@ -1,0 +1,128 @@
+﻿﻿@using Microsoft.AspNetCore.Identity
+@model AsmAppDev.Models.ApplicationUser
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<head>
+    <style>
+        /* Định dạng chung */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9fb;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #264653;
+            margin-bottom: 20px;
+        }
+
+        .vertical-line {
+            width: 2px;
+            height: 200px;
+            background-color: #e0e0e0;
+        }
+
+        .img-thumbnail {
+            border-radius: 50%;
+            border: 3px solid #2a9d8f;
+            object-fit: cover;
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .row dt {
+            font-weight: bold;
+            color: #264653;
+        }
+
+        .row dd {
+            margin-bottom: 10px;
+        }
+
+        .btn-outline-danger {
+            background-color: #e63946;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-outline-danger:hover {
+                background-color: #d62f3c;
+            }
+
+        .no-data {
+            font-style: italic;
+            color: #888;
+        }
+    </style>
+</head>
+
+<h2>View Profile JobSeeker</h2>
+<hr />
+
+<div class="profile-container">
+    <dl class="d-flex align-items-center">
+        <div>
+            <dd>
+                @if (!string.IsNullOrEmpty(Model.Avatar))
+
+                {
+                    <img src="@Model.Avatar" alt="Avatar" class="img-thumbnail" style="width: 200px; height: 200px;" />
+                }
+
+                else
+
+                {
+                    <span class="no-data">No avatar available</span>
+                }
+            </dd>
+        </div>
+
+        <div class="vertical-line mx-5"></div>
+
+        <div class="row">
+            <dt class="col-sm-4">Name:</dt>
+            <dd class="col-sm-8">@Model.Name</dd>
+
+            <dt class="col-sm-4">Introduction:</dt>
+            <dd class="col-sm-8">@Model.Introduction</dd>
+
+            <dt class="col-sm-4">Address:</dt>
+            <dd class="col-sm-8">@Model.Address</dd>
+
+            <dt class="col-sm-4">City:</dt>
+            <dd class="col-sm-8">@Model.City</dd>
+
+            <dd class="col-sm-6 text-center mt-3">
+                @if (!string.IsNullOrEmpty(Model.CV))
+
+                {
+                    <a class="btn btn-outline-danger" href="@Model.CV" target="_blank">Download CV</a>
+                }
+
+                else
+
+                {
+                    <span class="no-data">No CV uploaded</span>
+                }
+            </dd>
+        </div>
+    </dl>
+</div>

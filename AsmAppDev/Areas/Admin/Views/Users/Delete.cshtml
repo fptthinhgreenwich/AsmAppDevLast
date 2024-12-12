@@ -1,0 +1,141 @@
+﻿@model ApplicationUser
+
+<head>
+    <style>
+        /* Định dạng chung */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9fb;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #e63946;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .btn-primary {
+            background-color: #2a9d8f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-primary:hover {
+                background-color: #21867a;
+            }
+
+        form {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            color: #264653;
+            display: flex;
+            align-items: center;
+        }
+
+        input[disabled] {
+            background-color: #e9ecef;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 14px;
+            width: 100%;
+            cursor: not-allowed;
+            color: #6c757d;
+        }
+
+        .btn-danger {
+            background-color: #e63946;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-weight: bold;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-danger:hover {
+                background-color: #d62f3c;
+            }
+
+        .mb-3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+            .mb-3 label {
+                flex-basis: 30%;
+                text-align: right;
+                margin-right: 10px;
+            }
+
+            .mb-3 input {
+                flex-basis: 65%;
+            }
+    </style>
+</head>
+
+<div class="header">
+    <h2>Delete Account</h2>
+    <a asp-controller="Users" asp-action="Index" class="btn btn-primary">Back to List</a>
+</div>
+
+<form method="post" asp-action="Delete">
+    <input asp-for="Id" hidden />
+    <div class="mb-3">
+        <label asp-for="Name">
+            <i class="bi bi-person-circle"></i> Name:
+        </label>
+        <input asp-for="Name" class="form-control" disabled />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Email">
+            <i class="bi bi-envelope-at"></i> Email:
+        </label>
+        <input asp-for="Email" class="form-control" disabled />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Address">
+            <i class="bi bi-geo-alt"></i> Address:
+        </label>
+        <input asp-for="Address" class="form-control" disabled />
+    </div>
+    <div class="mb-3">
+        <label asp-for="City">
+            <i class="bi bi-building"></i> City:
+        </label>
+        <input asp-for="City" class="form-control" disabled />
+    </div>
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

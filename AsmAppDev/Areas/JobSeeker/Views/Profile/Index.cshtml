@@ -1,0 +1,140 @@
+﻿﻿@using Microsoft.AspNetCore.Identity
+@model AsmAppDev.Models.ApplicationUser
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #264653;
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #2a9d8f;
+            margin-bottom: 20px;
+        }
+
+        .btn-edit-profile {
+            display: inline-block;
+            background-color: #2a9d8f;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-edit-profile:hover {
+                background-color: #21867a;
+                color: #fff;
+            }
+
+        .profile-details {
+            margin-top: 20px;
+        }
+
+            .profile-details dt {
+                font-weight: bold;
+                color: #264653;
+            }
+
+            .profile-details dd {
+                margin-bottom: 10px;
+            }
+
+        .view-cv-btn {
+            display: inline-block;
+            text-align: center;
+            background-color: #e76f51;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+            .view-cv-btn:hover {
+                background-color: #d65f43;
+            }
+    </style>
+</head>
+
+<h1>User Profile</h1>
+
+<div class="profile-container">
+    <div class="profile-header">
+        @if (!string.IsNullOrEmpty(Model.Avatar))
+
+        {
+            <img src="@Model.Avatar" alt="Avatar" class="avatar" />
+        }
+
+        else
+
+        {
+            <span>No avatar available</span>
+        }
+
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-edit-profile"><i class="bi bi-pencil-square"></i> Edit Profile</a>
+    </div>
+
+    <div class="profile-details">
+        <dl>
+            <dt>Name:</dt>
+            <dd>@Model.Name</dd>
+
+            <dt>Introduction:</dt>
+            <dd>@Model.Introduction</dd>
+
+            <dt>Address:</dt>
+            <dd>@Model.Address</dd>
+
+            <dt>City:</dt>
+            <dd>@Model.City</dd>
+        </dl>
+
+        @if (!string.IsNullOrEmpty(Model.CV))
+
+        {
+            <a href="@Model.CV" target="_blank" class="view-cv-btn">View CV</a>
+        }
+
+        else
+
+        {
+            <span>No CV uploaded</span>
+        }
+    </div>
+</div>

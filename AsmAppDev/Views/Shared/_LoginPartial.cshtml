@@ -1,0 +1,76 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+    <head>
+        <style>
+            .user-name {
+                width: 120%;
+                margin-right: 60px;
+            }
+
+            .name {
+                font-weight: 700;
+            }
+
+            .name:hover {
+                color: #99FFCC;
+                transition: color 2s;
+            }
+
+            .name:not(:hover) {
+                transition: color 2s; 
+                color: black; 
+            }
+
+            .function {
+                position: relative;
+                margin-bottom: 5px;
+            }
+
+            .function::after {
+                content: '';
+                position: absolute;
+                height: 2px;
+                width: 0px;
+                max-width: 75%;
+                background-color: red;
+                bottom: -5px;
+                left: 0;
+                transition: width 0.5s;
+            }
+
+            .function:hover::after {
+                width: 100%;
+            }
+
+            .function:hover {
+                color: red;
+                transition: color 0.5s;
+            }
+        </style>
+    </head>
+
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <a id="manage" class="nav-link text-dark user-name" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Welcome <span class="name">@UserManager.GetUserName(User)</span>!!</a>
+    </li>
+    <li class="nav-item">
+        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0"><p class="function">Logout</p></button>
+        </form>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+            <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register"><p class="function">Register</p></a>
+    </li>
+    <li class="nav-item">
+            <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login"><p class="function">Login</p></a>
+    </li>
+}
+</ul>
